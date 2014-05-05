@@ -1,3 +1,6 @@
+# encoding: UTF-8
+# coding: UTF-8
+# -*- coding: UTF-8 -*-
 #
 # Cookbook Name:: example
 # Recipe:: default
@@ -6,3 +9,5 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+
+include_recipe 'apt'
