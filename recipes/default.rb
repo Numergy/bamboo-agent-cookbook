@@ -2,7 +2,7 @@
 # coding: UTF-8
 # -*- coding: UTF-8 -*-
 #
-# Cookbook Name:: example
+# Cookbook Name::skeleton
 # Recipe:: default
 #
 # Copyright 2014, YOUR_COMPANY_NAME
