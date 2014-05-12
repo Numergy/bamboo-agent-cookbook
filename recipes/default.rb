@@ -11,3 +11,7 @@
 #
 
 include_recipe 'apt'
+
+if 'foo'
+test='foo
+end
