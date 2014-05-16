@@ -2,12 +2,15 @@
 # coding: UTF-8
 # -*- coding: UTF-8 -*-
 #
-# Cookbook Name::skeleton
+# Cookbook Name::bamboo-agent
 # Recipe:: default
 #
-# Copyright 2014, YOUR_COMPANY_NAME
+# Copyright 2014, Numergy
 #
 # All rights reserved - Do Not Redistribute
 #
 
 include_recipe 'apt'
+include_recipe 'java'
+include_recipe 'bamboo-agent::download'
+include_recipe 'bamboo-agent::install'

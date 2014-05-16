@@ -1,0 +1,14 @@
+# This file is managed by Puppet! Any manual changes will probably be
+# overridden.
+#
+# (template: bamboo-agent/templates/bamboo-capabilities.properties.erb)
+#
+<%
+# Convert all hash keys / values to strings so they can be sorted without
+# comparison errors.
+stringified = @capabilities.map { |n,v| [n.to_s,v.to_s] }
+
+# Sort before rendering (hash ordering not consistent in Ruby 1.8.7)
+stringified.sort.each do |name,value| -%>
+<%= name %>=<%= value %>
+<% end -%>

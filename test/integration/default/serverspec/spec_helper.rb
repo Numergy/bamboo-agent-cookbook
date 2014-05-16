@@ -9,7 +9,7 @@ include SpecInfra::Helper::Exec
 include SpecInfra::Helper::DetectOS
 
 begin
-    require 'rspec_junit_formatter'
+  require 'rspec_junit_formatter'
 rescue LoadError
   require 'rubygems/dependency_installer'
   Gem::DependencyInstaller.new.install('rspec_junit_formatter')

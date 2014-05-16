@@ -1,4 +1,4 @@
-skeleton Cookbook
+Bamboo-agent Cookbook
 ================
 TODO: Enter the cookbook description here.
 

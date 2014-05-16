@@ -16,4 +16,4 @@ platforms:
 suites:
   - name: 'default'
     run_list:
-      - recipe[skeleton]
+      - recipe[bamboo-agent]
