@@ -52,7 +52,7 @@ describe 'bamboo-agent::install' do
     end
 
     it 'should fail' do
-      expect { subject }.to raise_error(ArgumentError, /wrapper_conf_properties is not an Array/)
+      expect { subject }.to raise_error(ArgumentError, /wrapper_conf_properties is not an Hash/)
     end
   end
 
@@ -63,7 +63,7 @@ describe 'bamboo-agent::install' do
           {
             id: '1',
             capabilities: {},
-            wrapper_conf_properties: []
+            wrapper_conf_properties: {}
           }
         ]
       end.converge(described_recipe)
@@ -90,7 +90,7 @@ describe 'bamboo-agent::install' do
         source: 'init.d/service.erb'
       )
 
-      expect(subject).to start_service('bamboo-agent1')
+      expect(subject).to restart_service('bamboo-agent1')
       expect(subject).to enable_service('bamboo-agent1')
 
       expect(subject).to create_template('/usr/local/bamboo/agent1-home/bin/bamboo-capabilities.properties').with(
@@ -108,10 +108,19 @@ describe 'bamboo-agent::install' do
       expect(subject).to run_augeas('update-wrapper-agent1').with(
         lens: 'CD_Properties.lns',
         incl: '/usr/local/bamboo/agent1-home/conf/wrapper.conf',
-        changes: []
+        changes: ['set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085']
+      )
+
+      expect(subject).to create_cookbook_file('cd_properties.lns').with(
+        source: 'augeas/lenses/cd_properties.aug',
+        path: '/usr/share/augeas/lenses/dist/cd_properties.aug',
+        owner: 'root',
+        group: 'root',
+        mode: '0644'
       )
     end
   end
+
   describe 'with capabilities and wrapper conf parameters' do
     let(:subject) do
       ChefSpec::Runner.new do |node|
@@ -121,9 +130,9 @@ describe 'bamboo-agent::install' do
             capabilities: {
               'system.builder.command.Bash' => '/bin/bash'
             },
-            wrapper_conf_properties: [
-              'set wrapper.java.maxmemory 4096'
-            ],
+            wrapper_conf_properties: {
+              'wrapper.java.maxmemory' => 4096
+            },
             private_tmp_dir: true
           }
         ]
@@ -159,9 +168,9 @@ describe 'bamboo-agent::install' do
         lens: 'CD_Properties.lns',
         incl: '/usr/local/bamboo/agent1-home/conf/wrapper.conf',
         changes: [
-          "set set.TMP '/usr/local/bamboo/agent1-home/.agent_tmp'",
-          "set wrapper.java.additional.3 '-Djava.io.tmpdir=/usr/local/bamboo/agent1-home/.agent_tmp'",
-          'set wrapper.java.maxmemory 4096'
+          'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/set.TMP /usr/local/bamboo/agent1-home/.agent_tmp',
+          'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.java.additional.3 -Djava.io.tmpdir=/usr/local/bamboo/agent1-home/.agent_tmp',
+          'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085'
         ]
       )
     end

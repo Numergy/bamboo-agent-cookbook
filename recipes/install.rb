@@ -23,12 +23,12 @@ bamboo_config['agents'].each do |agent|
   if agent.key?('wrapper_conf_properties')
     wrapper_conf_properties = agent[:wrapper_conf_properties]
   else
-    wrapper_conf_properties = []
+    wrapper_conf_properties = {}
   end
 
   fail ArgumentError, "\"#{agent[:id]}\" is not a valid agent id" unless agent[:id] =~  /\A[-\w]+\z/
   fail ArgumentError, 'capabilities is not a Hash' unless capabilities.is_a?(Hash)
-  fail ArgumentError, 'wrapper_conf_properties is not an Array' unless wrapper_conf_properties.is_a?(Array)
+  fail ArgumentError, 'wrapper_conf_properties is not an Hash' unless wrapper_conf_properties.is_a?(Hash)
 
   home_directory = "#{bamboo_config['install_dir']}/agent#{agent[:id]}-home"
   script_path = "#{home_directory}/bin/bamboo-agent.sh"
@@ -59,7 +59,7 @@ bamboo_config['agents'].each do |agent|
   end
 
   service service_name do
-    action [:enable, :start]
+    action [:enable, :restart]
   end
 
   capabilities = bamboo_config[:capabilities].merge(capabilities)
@@ -92,10 +92,9 @@ bamboo_config['agents'].each do |agent|
       action :create
     end
 
-    tmp_dir_props = [
-      "set set.TMP '#{agent_tmp}'",
-      "set wrapper.java.additional.3 '-Djava.io.tmpdir=#{agent_tmp}'"
-    ]
+    tmp_dir_props = {}
+    tmp_dir_props['set.TMP'] = agent_tmp
+    tmp_dir_props['wrapper.java.additional.3'] = "-Djava.io.tmpdir=#{agent_tmp}"
 
     package 'tmpwatch' do
       action :install
@@ -105,10 +104,25 @@ bamboo_config['agents'].each do |agent|
       command "/usr/sbin/tmpwatch 10d #{agent_tmp}"
     end
   else
-    tmp_dir_props = []
+    tmp_dir_props = {}
   end
 
+  tmp_dir_props['wrapper.app.parameter.2'] = bamboo_config['server']['url']
+  tmp_dir_props.merge(wrapper_conf_properties)
   wrapper_path = "#{home_directory}/conf/wrapper.conf"
+  augeas_props = []
+  tmp_dir_props.each do |key, value|
+    augeas_props << "set /files#{wrapper_path}/#{key} #{value}"
+  end
+
+  cookbook_file 'cd_properties.lns' do
+    source 'augeas/lenses/cd_properties.aug'
+    path '/usr/share/augeas/lenses/dist/cd_properties.aug'
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end
+
   file wrapper_path do
     owner user['name']
     group user['group']
@@ -118,7 +132,7 @@ bamboo_config['agents'].each do |agent|
   augeas "update-wrapper-agent#{agent[:id]}" do
     lens 'CD_Properties.lns'
     incl wrapper_path
-    changes tmp_dir_props.concat(wrapper_conf_properties)
+    changes augeas_props
     notifies :restart, "service[#{service_name}]", :delayed
   end
 end
