@@ -10,8 +10,9 @@ describe 'bamboo-agent::default' do
   # Write full examples using the `expect` syntax
   it 'does includes recipes' do
     expect(subject).to include_recipe('apt')
+    expect(subject).to include_recipe('augeas::geminstall')
     expect(subject).to include_recipe('java')
-    expect(subject).to include_recipe('bamboo-agent::install')
     expect(subject).to include_recipe('bamboo-agent::download')
+    expect(subject).to include_recipe('bamboo-agent::install')
   end
 end

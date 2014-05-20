@@ -3,7 +3,7 @@
 # -*- coding: UTF-8 -*-
 #
 # Cookbook Name::bamboo-agent
-# Recipe:: default
+# Recipe:: download
 #
 # Copyright 2014, Numergy
 #
@@ -13,9 +13,14 @@
 bamboo_config = node['bamboo-agent']
 user = bamboo_config['user']
 
+group user['group'] do
+  action :create
+end
+
 user user['name'] do
   supports manage_home: user['manage']
-  group user['group']
+  home "/home/#{user['name']}"
+  gid user['group']
   shell user['shell']
   action :create
 end

@@ -11,6 +11,9 @@
 #
 
 include_recipe 'apt'
+resources(execute: 'apt-get-update').run_action(:run)
+
+include_recipe 'augeas::geminstall'
 include_recipe 'java'
 include_recipe 'bamboo-agent::download'
 include_recipe 'bamboo-agent::install'

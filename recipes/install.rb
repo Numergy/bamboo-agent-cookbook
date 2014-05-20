@@ -3,7 +3,7 @@
 # -*- coding: UTF-8 -*-
 #
 # Cookbook Name::bamboo-agent
-# Recipe:: default
+# Recipe:: install
 #
 # Copyright 2014, Numergy
 #
@@ -14,13 +14,25 @@ bamboo_config = node['bamboo-agent']
 user = bamboo_config['user']
 
 bamboo_config['agents'].each do |agent|
-  fail ArgumentError, "\"#{agent[:id]}\" is not a valid agent id" unless agent[:id] =~  /\A[-\w]+\z/
-  fail ArgumentError, 'capabilities is not a Hash' unless agent.key?('capabilities') && agent[:capabilities].is_a?(Hash)
-  fail ArgumentError, 'wrapper_conf_properties is not a Hash' unless agent.key?('wrapper_conf_properties') && agent[:wrapper_conf_properties].is_a?(Hash)
+  if agent.key?('capabilities')
+    capabilities = agent[:capabilities]
+  else
+    capabilities = {}
+  end
 
-  home_directory = "#{user['install_dir']}/agent#{agent[:id]}-home"
+  if agent.key?('wrapper_conf_properties')
+    wrapper_conf_properties = agent[:wrapper_conf_properties]
+  else
+    wrapper_conf_properties = []
+  end
+
+  fail ArgumentError, "\"#{agent[:id]}\" is not a valid agent id" unless agent[:id] =~  /\A[-\w]+\z/
+  fail ArgumentError, 'capabilities is not a Hash' unless capabilities.is_a?(Hash)
+  fail ArgumentError, 'wrapper_conf_properties is not an Array' unless wrapper_conf_properties.is_a?(Array)
+
+  home_directory = "#{bamboo_config['install_dir']}/agent#{agent[:id]}-home"
   script_path = "#{home_directory}/bin/bamboo-agent.sh"
-  service_name "bamboo-agent#{id}"
+  service_name = "bamboo-agent#{agent[:id]}"
 
   directory home_directory do
     owner user['name']
@@ -29,7 +41,7 @@ bamboo_config['agents'].each do |agent|
     action :create
   end
 
-  execute "install-agent#{id}" do
+  execute "install-agent#{agent[:id]}" do
     path ['/bin', '/usr/bin', '/usr/local/bin']
     user user['name']
     group user['group']
@@ -38,7 +50,7 @@ bamboo_config['agents'].each do |agent|
     action :run
   end
 
-  template "/etc/init.d/#{service}" do
+  template "/etc/init.d/#{service_name}" do
     owner 'root'
     group 'root'
     mode '0755'
@@ -50,7 +62,7 @@ bamboo_config['agents'].each do |agent|
     action [:enable, :start]
   end
 
-  capabilities = bamboo_config[:capabilities].merge(agent[:capabilities])
+  capabilities = bamboo_config[:capabilities].merge(capabilities)
 
   macro = '!ID!'
   expand = lambda do |value|
@@ -89,11 +101,11 @@ bamboo_config['agents'].each do |agent|
       action :install
     end
 
-    cron "#{agent_tmp}-tmp-cleanup" do
+    cron "agent#{agent[:id]}-tmp-cleanup" do
       command "/usr/sbin/tmpwatch 10d #{agent_tmp}"
     end
   else
-    tmp_dir_props = {}
+    tmp_dir_props = []
   end
 
   wrapper_path = "#{home_directory}/conf/wrapper.conf"
@@ -103,10 +115,10 @@ bamboo_config['agents'].each do |agent|
     action :create
   end
 
-  augeas "update-#{wrapper_path}-properties" do
+  augeas "update-wrapper-agent#{agent[:id]}" do
     lens 'CD_Properties.lns'
     incl wrapper_path
-    changes tmp_dir_props
-    notifies :start, "service[#{service_name}]", :delayed
+    changes tmp_dir_props.concat(wrapper_conf_properties)
+    notifies :restart, "service[#{service_name}]", :delayed
   end
 end

@@ -8,6 +8,7 @@ describe 'bamboo-agent::download' do
   subject { ChefSpec::Runner.new.converge(described_recipe) }
 
   it 'creates bamboo user' do
+    expect(subject).to create_group('bamboo')
     expect(subject).to create_user('bamboo').with(
       supports: { manage_home: true },
       shell: '/bin/bash',
