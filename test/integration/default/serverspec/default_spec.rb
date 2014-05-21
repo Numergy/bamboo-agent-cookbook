@@ -32,7 +32,6 @@ end
   end
 
   describe service("bamboo-agent#{agent_id}") do
-    it { should be_running }
     it { should be_enabled }
   end
 end
