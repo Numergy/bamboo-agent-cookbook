@@ -12,7 +12,7 @@ This cookbook is based on the Puppet module: https://github.com/kayakco/puppet-b
 
 Attributes
 ----------
-#### skeleton::default
+#### bamboo-agent::default
 <table>
   <tr>
     <th>Key</th>
