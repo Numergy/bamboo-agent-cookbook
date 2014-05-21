@@ -1,5 +1,5 @@
 metadata
 
 cookbook 'apt'
-cookbook 'augeas', :git => 'https://github.com/PierreRambaud/chef-augeas.git', :branch => 'debian-version'
+cookbook 'augeas', :git => 'https://github.com/nhuff/chef-augeas.git'
 cookbook 'java'
