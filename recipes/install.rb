@@ -13,6 +13,8 @@
 bamboo_config = node['bamboo-agent']
 user = bamboo_config['user']
 
+server_url = "#{node['bamboo-agent']['server']['protocol']}://#{node['bamboo-agent']['server']['address']}:#{node['bamboo-agent']['server']['port']}"
+
 bamboo_config['agents'].each do |agent|
   if agent.key?('capabilities')
     capabilities = agent[:capabilities]
@@ -45,7 +47,7 @@ bamboo_config['agents'].each do |agent|
     path ['/bin', '/usr/bin', '/usr/local/bin']
     user user['name']
     group user['group']
-    command "java -Dbamboo.home=#{home_directory} -jar #{bamboo_config['installer_jar']} #{bamboo_config['server']['url']} install"
+    command "java -Dbamboo.home=#{home_directory} -jar #{bamboo_config['installer_jar']} #{server_url} install"
     creates script_path
     action :run
   end
@@ -107,7 +109,7 @@ bamboo_config['agents'].each do |agent|
     tmp_dir_props = {}
   end
 
-  tmp_dir_props['wrapper.app.parameter.2'] = bamboo_config['server']['url']
+  tmp_dir_props['wrapper.app.parameter.2'] = server_url
   tmp_dir_props.merge(wrapper_conf_properties)
   wrapper_path = "#{home_directory}/conf/wrapper.conf"
   augeas_props = []

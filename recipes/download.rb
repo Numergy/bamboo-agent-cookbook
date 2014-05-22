@@ -35,7 +35,7 @@ end
 
 server_config = bamboo_config['server']
 remote_file 'bamboo-agent-installer' do
-  source "#{server_config['url']}/agentServer/agentInstaller"
+  source "#{server_config['protocol']}://#{server_config['address']}:#{server_config['port']}/agentServer/agentInstaller"
   path bamboo_config['installer_jar']
   mode '0644'
   owner user['name']

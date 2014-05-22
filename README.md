@@ -39,12 +39,6 @@ Attributes
     <td><tt>8085</tt></td>
   </tr>
   <tr>
-    <td><tt>['bamboo-agent']['server']['url']</tt></td>
-    <td>String</td>
-    <td>Bamboo server url</td>
-    <td><tt>"#{node['bamboo-agent']['server']['protocol']}://#{node['bamboo-agent']['server']['address']}:#{node['bamboo-agent']['server']['port']}"</tt></td>
-  </tr>
-  <tr>
     <td><tt>['bamboo-agent']['install_dir']</tt></td>
     <td>String</td>
     <td>whether to install bamboo agents</td>
