@@ -111,7 +111,7 @@ describe 'bamboo-agent::install' do
         changes: ['set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085']
       )
 
-      expect(subject).to create_cookbook_file('cd_properties.lns').with(
+      expect(subject).to create_cookbook_file('cd_properties.lns-agent1').with(
         source: 'augeas/lenses/cd_properties.aug',
         path: '/usr/share/augeas/lenses/dist/cd_properties.aug',
         owner: 'root',

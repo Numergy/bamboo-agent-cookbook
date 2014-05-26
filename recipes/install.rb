@@ -117,7 +117,7 @@ bamboo_config['agents'].each do |agent|
     augeas_props << "set /files#{wrapper_path}/#{key} #{value}"
   end
 
-  cookbook_file 'cd_properties.lns' do
+  cookbook_file "cd_properties.lns-agent#{agent[:id]}" do
     source 'augeas/lenses/cd_properties.aug'
     path '/usr/share/augeas/lenses/dist/cd_properties.aug'
     owner 'root'
