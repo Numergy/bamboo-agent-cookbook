@@ -23,6 +23,9 @@ describe 'bamboo-agent::download' do
       group: 'bamboo',
       mode: '0755'
     )
+    expect(subject).to_not reload_ohai('reload_passwd').with(
+      plugin: 'etc'
+    )
   end
 
   it 'downloads installer' do

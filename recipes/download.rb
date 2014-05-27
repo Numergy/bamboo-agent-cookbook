@@ -17,11 +17,17 @@ group user['group'] do
   action :create
 end
 
+ohai 'reload_passwd' do
+  action :nothing
+  plugin 'etc'
+end
+
 user user['name'] do
   supports manage_home: user['manage']
   home "/home/#{user['name']}"
   gid user['group']
   shell user['shell']
+  notifies :reload, 'ohai[reload_passwd]', :immediately
   action :create
 end
 
