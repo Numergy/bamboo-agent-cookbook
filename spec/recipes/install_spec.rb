@@ -108,7 +108,7 @@ describe 'bamboo-agent::install' do
       expect(subject).to run_augeas('update-wrapper-agent1').with(
         lens: 'CD_Properties.lns',
         incl: '/usr/local/bamboo/agent1-home/conf/wrapper.conf',
-        changes: ['set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085']
+        changes: ['set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085/agentServer/']
       )
 
       expect(subject).to create_cookbook_file('cd_properties.lns-agent1').with(
@@ -170,7 +170,7 @@ describe 'bamboo-agent::install' do
         changes: [
           'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/set.TMP /usr/local/bamboo/agent1-home/.agent_tmp',
           'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.java.additional.3 -Djava.io.tmpdir=/usr/local/bamboo/agent1-home/.agent_tmp',
-          'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085'
+          'set /files/usr/local/bamboo/agent1-home/conf/wrapper.conf/wrapper.app.parameter.2 http://localhost:8085/agentServer/'
         ]
       )
     end

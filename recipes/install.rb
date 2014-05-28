@@ -109,7 +109,7 @@ bamboo_config['agents'].each do |agent|
     tmp_dir_props = {}
   end
 
-  tmp_dir_props['wrapper.app.parameter.2'] = server_url
+  tmp_dir_props['wrapper.app.parameter.2'] = "#{server_url}/agentServer/"
   tmp_dir_props.merge(wrapper_conf_properties)
   wrapper_path = "#{home_directory}/conf/wrapper.conf"
   augeas_props = []
