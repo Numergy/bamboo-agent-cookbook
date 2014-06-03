@@ -80,7 +80,7 @@ describe 'bamboo-agent::install' do
         path: ['/bin', '/usr/bin', '/usr/local/bin'],
         user: 'bamboo',
         group: 'bamboo',
-        command: 'java -Dbamboo.home=/usr/local/bamboo/agent1-home -jar /usr/local/bamboo/bamboo-agent-installer.jar http://localhost:8085 install',
+        command: 'java -Dbamboo.home=/usr/local/bamboo/agent1-home -jar /usr/local/bamboo/bamboo-agent-installer.jar \'http://localhost:8085/agentServer\' install',
         creates: '/usr/local/bamboo/agent1-home/bin/bamboo-agent.sh'
       )
 

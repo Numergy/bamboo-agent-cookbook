@@ -47,7 +47,7 @@ bamboo_config['agents'].each do |agent|
     path ['/bin', '/usr/bin', '/usr/local/bin']
     user user['name']
     group user['group']
-    command "java -Dbamboo.home=#{home_directory} -jar #{bamboo_config['installer_jar']} #{server_url} install"
+    command "java -Dbamboo.home=#{home_directory} -jar #{bamboo_config['installer_jar']} '#{server_url}/agentServer' install"
     creates script_path
     action :run
   end
