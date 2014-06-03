@@ -1,7 +1,7 @@
 # encoding: UTF-8
 # coding: UTF-8
 # -*- coding: UTF-8 -*-
-# Added by ChefSpec
+require 'rspec/expectations'
 require 'chefspec'
 require 'chefspec/berkshelf'
 
