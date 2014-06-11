@@ -1,4 +1,4 @@
-Bamboo-agent Cookbook
+Bamboo-agent Cookbook [![Build Status](https://travis-ci.org/Numergy/bamboo-agent-cookbook.svg)](https://travis-ci.org/Numergy/bamboo-agent-cookbook)
 ================
 A Chef cookbook for managing Bamboo agents.
 
