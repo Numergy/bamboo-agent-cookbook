@@ -2,7 +2,7 @@
 # coding: UTF-8
 # -*- coding: UTF-8 -*-
 #
-require_relative '../spec_helper'
+require_relative 'spec_helper'
 
 describe 'bamboo-agent::install' do
   describe 'with wrong agent capabilities' do

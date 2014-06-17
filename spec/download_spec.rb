@@ -2,7 +2,7 @@
 # coding: UTF-8
 # -*- coding: UTF-8 -*-
 #
-require_relative '../spec_helper'
+require_relative 'spec_helper'
 
 describe 'bamboo-agent::download' do
   subject { ChefSpec::Runner.new.converge(described_recipe) }
