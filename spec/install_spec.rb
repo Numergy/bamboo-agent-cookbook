@@ -84,8 +84,12 @@ describe 'bamboo-agent::install' do
         creates: '/usr/local/bamboo/agent1-home/bin/bamboo-agent.sh'
       )
 
-      expect(subject).to create_link('/etc/init.d/bamboo-agent1').with(
-        to: '/usr/local/bamboo/agent1-home/bin/bamboo-agent.sh'
+      expect(subject).to create_template('/etc/init.d/bamboo-agent1').with(
+        source: 'init-script.erb',
+        mode: '755',
+        owner: 'root',
+        group: 'root',
+        variables: { user: 'bamboo', script: '/usr/local/bamboo/agent1-home/bin/bamboo-agent.sh', agent_id: '1' }
       )
 
       expect(subject).to restart_service('bamboo-agent1')

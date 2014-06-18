@@ -1,0 +1,16 @@
+#!/bin/bash
+# bamboo-agent<%= @agent_id.to_s.ljust(4) %> Init script for running bamboo agent
+#
+# chkconfig: 2345 98 02
+#
+# description: Starts and stops bamboo agent <%= @agent_id %>
+
+# This is just a delegator to the Bamboo agent script.
+
+if [[ "$EUID" != '0' ]]; then
+  echo 'This script must be run as root!'
+  exit 1
+fi
+
+status=`su - <%= @user %> -c "<%= @script %> $@ 1>&2 ;"' echo $?'`
+exit $status

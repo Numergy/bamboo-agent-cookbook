@@ -52,8 +52,13 @@ bamboo_config['agents'].each do |agent|
     action :run
   end
 
-  link "/etc/init.d/#{service_name}" do
-    to "#{home_directory}/bin/bamboo-agent.sh"
+  template "/etc/init.d/#{service_name}" do
+    source 'init-script.erb'
+    owner 'root'
+    group 'root'
+    mode '755'
+    variables user: user['name'], script: "#{home_directory}/bin/bamboo-agent.sh", agent_id: agent[:id]
+    action :create
   end
 
   service service_name do
