@@ -1,6 +1,4 @@
-# encoding: UTF-8
-# coding: UTF-8
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 #
 default['bamboo-agent']['server']['address'] = 'localhost'
 default['bamboo-agent']['server']['protocol'] = 'http'

@@ -1,6 +1,5 @@
-# encoding: UTF-8
-# coding: UTF-8
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
+#
 require 'rspec/expectations'
 require 'chefspec'
 require 'chefspec/berkshelf'
