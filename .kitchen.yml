@@ -7,9 +7,11 @@ provisioner:
 
 platforms:
   - name: ubuntu-13.04
+  - name: ubuntu-12.04
+  - name: debian-7.6
     driver_config:
-      box: opscode-ubuntu-13.04
-      box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-13.04_provisionerless.box
+      box: chef/debian-7.6
+  - name: centos-6.4
 
 suites:
   - name: 'default'
