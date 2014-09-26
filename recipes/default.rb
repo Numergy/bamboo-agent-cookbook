@@ -8,8 +8,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'apt'
-resources(execute: 'apt-get-update').run_action(:run)
+case node['platform']
+when 'debian', 'ubuntu'
+  include_recipe 'apt'
+  resources(execute: 'apt-get-update').run_action(:run)
+when 'redhat', 'centos', 'fedora'
+  include_recipe 'yum'
+end
 
 include_recipe 'augeas::geminstall'
 include_recipe 'java'
