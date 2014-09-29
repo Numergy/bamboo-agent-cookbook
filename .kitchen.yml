@@ -6,7 +6,6 @@ provisioner:
   cookbook_files_glob: VERSION,README.*,metadata.{json,rb},attributes/**/*,definitions/**/*,files/**/*,libraries/**/*,providers/**/*,recipes/**/*,resources/**/*,templates/**/*
 
 platforms:
-  - name: ubuntu-13.04
   - name: ubuntu-12.04
   - name: debian-7.6
     driver_config:
