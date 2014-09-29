@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'chef', '~> 11.12.2'
-gem 'berkshelf', '~> 2.0.16'
+
+group :unit do
+  gem 'berkshelf', '~> 3.1'
+  gem 'chefspec', '~> 3.4'
+end
 
 group :integration do
   gem 'rspec_junit_formatter'
@@ -11,6 +15,5 @@ group :integration do
   gem 'kitchen-vagrant'
   gem 'kitchen-openstack'
   gem 'serverspec'
-  gem 'chefspec'
   gem 'foodcritic'
 end
