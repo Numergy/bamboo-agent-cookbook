@@ -2,8 +2,7 @@
 #
 require 'serverspec'
 
-include SpecInfra::Helper::Exec
-include SpecInfra::Helper::DetectOS
+set :backend, :exec
 
 begin
   require 'rspec_junit_formatter'
@@ -13,10 +12,8 @@ rescue LoadError
   require 'rspec_junit_formatter'
 end
 
+set :path, '$PATH:/sbin:/usr/sbin:/usr/bin:/bin'
+
 RSpec.configure do |c|
-  c.before :all do
-    c.os = backend(Serverspec::Commands::Base).check_os
-  end
-  c.path = '/sbin:/usr/sbin:/usr/bin:/bin'
   c.add_formatter 'RspecJunitFormatter', '/tmp/kitchen.xml'
 end

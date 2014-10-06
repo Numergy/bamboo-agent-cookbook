@@ -15,7 +15,7 @@ describe 'bamboo-agent::install' do
     end
 
     it 'should fail' do
-      expect { subject }.to raise_error(ArgumentError, /is not a valid agent id/)
+      expect { subject }.to raise_error(Chef::Exceptions::ValidationFailed)
     end
   end
 
@@ -32,7 +32,7 @@ describe 'bamboo-agent::install' do
     end
 
     it 'should fail' do
-      expect { subject }.to raise_error(ArgumentError, /capabilities is not a Hash/)
+      expect { subject }.to raise_error(Chef::Exceptions::ValidationFailed)
     end
   end
 
@@ -50,13 +50,13 @@ describe 'bamboo-agent::install' do
     end
 
     it 'should fail' do
-      expect { subject }.to raise_error(ArgumentError, /wrapper_conf_properties is not an Hash/)
+      expect { subject }.to raise_error(Chef::Exceptions::ValidationFailed)
     end
   end
 
   describe 'with parameters' do
     let(:subject) do
-      ChefSpec::Runner.new do |node|
+      ChefSpec::Runner.new(step_into: ['bamboo_agent_install']) do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: '1',
@@ -123,7 +123,7 @@ describe 'bamboo-agent::install' do
 
   describe 'with capabilities and wrapper conf parameters' do
     let(:subject) do
-      ChefSpec::Runner.new do |node|
+      ChefSpec::Runner.new(step_into: ['bamboo_agent_install']) do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: '1',
