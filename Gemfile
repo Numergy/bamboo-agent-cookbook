@@ -8,7 +8,6 @@ group :unit do
 end
 
 group :integration do
-  gem 'rspec_junit_formatter'
   gem 'rubocop'
   gem 'strainer', '~> 3.4.0'
   gem 'test-kitchen', '~> 1.2.1'
