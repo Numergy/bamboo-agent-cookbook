@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Cookbook Name:: phpenv
-# Resource:: build
+# Cookbook Name:: bamboo-agent
+# Resource:: install
 #
 # Copyright 2014, Numergy
 #
