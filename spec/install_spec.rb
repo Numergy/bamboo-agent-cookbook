@@ -68,6 +68,11 @@ describe 'bamboo-agent::install' do
     end
 
     it 'should install agent' do
+      expect(subject).to install_bamboo_agent('1')
+        .with(id: '1',
+              capabilities: {},
+              wrapper_conf_properties: {})
+
       expect(subject).to create_directory('/usr/local/bamboo/agent1-home').with(
         owner: 'bamboo',
         group: 'bamboo',
@@ -140,6 +145,16 @@ describe 'bamboo-agent::install' do
     end
 
     it 'should install agent' do
+      expect(subject).to install_bamboo_agent('1')
+        .with(id: '1',
+              capabilities: {
+                'system.builder.command.Bash' => '/bin/bash'
+              },
+              wrapper_conf_properties: {
+                'wrapper.java.maxmemory' => 4096
+              },
+              private_tmp_dir: true)
+
       expect(subject).to create_directory('/usr/local/bamboo/agent1-home/.agent_tmp').with(
         owner: 'bamboo',
         group: 'bamboo',
