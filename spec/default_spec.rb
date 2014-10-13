@@ -14,6 +14,7 @@ describe 'debian=>bamboo-agent::default' do
     expect(subject).to include_recipe('apt')
     expect(subject).to include_recipe('augeas::geminstall')
     expect(subject).to include_recipe('java')
+    expect(subject).to include_recipe('build-essential')
     expect(subject).to include_recipe('bamboo-agent::download')
     expect(subject).to include_recipe('bamboo-agent::install')
   end

@@ -26,6 +26,9 @@ when 'redhat', 'centos', 'fedora'
   include_recipe 'yum'
 end
 
+node.default['build-essential']['compile_time'] = true
+include_recipe 'build-essential'
+
 include_recipe 'augeas::geminstall'
 include_recipe 'java'
 include_recipe 'bamboo-agent::download'
