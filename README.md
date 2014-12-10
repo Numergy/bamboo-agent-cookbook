@@ -111,13 +111,22 @@ Usage
 
 Running tests
 -------------
-This cookbook use Strainer to run tests suites:  
+This cookbook use Rake to run tests suites:  
 
 - First install dependencies:  
 `bundle install`  
 
-- Run all tests:  
-`bundle exec strainer test`  
+- Run all checkstyle tests:  
+`bundle exec rake test:checkstyle`  
+
+- Run all rspec tests:  
+`bundle exec rake test:specs`  
+
+- Run all kitchen tests:  
+`bundle exec rake test:kitchen`  
+
+- Run all tests (checkstyle and rspec):  
+`bundle exec rake test`  
 
 Available tests suites:  
 - Knife
