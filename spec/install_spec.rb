@@ -5,7 +5,7 @@ require_relative 'spec_helper'
 describe 'bamboo-agent::install' do
   describe 'with wrong agent capabilities' do
     let(:subject) do
-      ChefSpec::Runner.new do |node|
+      ChefSpec::ServerRunner.new do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: 'this is wrong id'
@@ -21,7 +21,7 @@ describe 'bamboo-agent::install' do
 
   describe 'with wrong agent capabilities' do
     let(:subject) do
-      ChefSpec::Runner.new do |node|
+      ChefSpec::ServerRunner.new do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: '1',
@@ -38,7 +38,7 @@ describe 'bamboo-agent::install' do
 
   describe 'with wrong agent wrapper_conf_properties' do
     let(:subject) do
-      ChefSpec::Runner.new do |node|
+      ChefSpec::ServerRunner.new do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: '1',
@@ -56,7 +56,7 @@ describe 'bamboo-agent::install' do
 
   describe 'with parameters' do
     let(:subject) do
-      ChefSpec::Runner.new(step_into: ['bamboo_agent_install']) do |node|
+      ChefSpec::ServerRunner.new(step_into: ['bamboo_agent_install']) do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: '1',
@@ -128,7 +128,7 @@ describe 'bamboo-agent::install' do
 
   describe 'with capabilities and wrapper conf parameters' do
     let(:subject) do
-      ChefSpec::Runner.new(step_into: ['bamboo_agent_install']) do |node|
+      ChefSpec::ServerRunner.new(step_into: ['bamboo_agent_install']) do |node|
         node.set['bamboo-agent']['agents'] = [
           {
             id: '1',

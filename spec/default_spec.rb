@@ -5,7 +5,7 @@ require_relative 'spec_helper'
 describe 'debian=>bamboo-agent::default' do
   # speedup thing as you don't use mocking
   cached(:subject) do
-    runner = ChefSpec::Runner.new(platform: 'debian', version: '7.4')
+    runner = ChefSpec::ServerRunner.new(platform: 'debian', version: '7.4')
     runner.converge('bamboo-agent::default')
   end
 
@@ -23,7 +23,7 @@ end
 describe 'centos=>bamboo-agent::default' do
   # speedup thing as you don't use mocking
   cached(:subject) do
-    runner = ChefSpec::Runner.new(platform: 'centos', version: '6.0')
+    runner = ChefSpec::ServerRunner.new(platform: 'centos', version: '6.0')
     runner.converge('bamboo-agent::default')
   end
 
