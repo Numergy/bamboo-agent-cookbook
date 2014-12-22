@@ -53,6 +53,8 @@ test/*
 features/*
 Guardfile
 Procfile
+.rubocop.yml
+Rakefile
 .kitchen
 .kitchen.*
 dockerfiles
