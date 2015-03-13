@@ -20,9 +20,7 @@
 action :run do
   bamboo_config  = node['bamboo-agent']
   user           = bamboo_config['user']
-
-  server_url     = "#{bamboo_config['server']['protocol']}://#{bamboo_config['server']['address']}:#{bamboo_config['server']['port']}"
-
+  server_url     = bamboo_config['server']['url']
   home_directory = "#{bamboo_config['install_dir']}/agent#{new_resource.id}-home"
   script_path    = "#{home_directory}/bin/bamboo-agent.sh"
   service_name   = "bamboo-agent#{new_resource.id}"
@@ -40,7 +38,7 @@ action :run do
   end
 
   execute "install-agent#{new_resource.id}" do
-    path ['/bin', '/usr/bin', '/usr/local/bin']
+    environment 'PATH' => "/bin:/usr/bin:/usr/local/bin:#{ENV['PATH']}"
     user user['name']
     group user['group']
     command "java -Dbamboo.home=#{home_directory} -jar #{bamboo_config['installer_jar']} '#{server_url}/agentServer' install"
