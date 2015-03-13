@@ -80,7 +80,6 @@ describe 'bamboo-agent::install' do
       )
 
       expect(subject).to run_execute('install-agent1').with(
-        path: ['/bin', '/usr/bin', '/usr/local/bin'],
         user: 'bamboo',
         group: 'bamboo',
         command: 'java -Dbamboo.home=/usr/local/bamboo/agent1-home -jar /usr/local/bamboo/bamboo-agent-installer.jar \'http://localhost:8085/agentServer\' install',
