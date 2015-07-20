@@ -54,10 +54,11 @@ action :run do
     mode '755'
     variables user: user['name'], script: "#{home_directory}/bin/bamboo-agent.sh", agent_id: new_resource.id
     action :create
+    notifies :restart, "service[#{service_name}]", :delayed
   end
 
   service service_name do
-    action [:enable, :restart]
+    action [:enable, :start]
   end
 
   expand = lambda do |value|
