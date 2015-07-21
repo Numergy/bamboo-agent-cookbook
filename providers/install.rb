@@ -25,7 +25,9 @@ action :run do
   script_path    = "#{home_directory}/bin/bamboo-agent.sh"
   service_name   = "bamboo-agent#{new_resource.id}"
 
-  tmp_dir_props, expanded, augeas_props = {}, {}, []
+  tmp_dir_props = {}
+  expanded = {}
+  augeas_props = []
 
   # merge global and agent custom capabilities
   capabilities   = new_resource.capabilities.merge(bamboo_config[:capabilities])
@@ -54,10 +56,11 @@ action :run do
     mode '755'
     variables user: user['name'], script: "#{home_directory}/bin/bamboo-agent.sh", agent_id: new_resource.id
     action :create
+    notifies :restart, "service[#{service_name}]", :delayed
   end
 
   service service_name do
-    action [:enable, :restart]
+    action [:enable, :start]
   end
 
   expand = lambda do |value|

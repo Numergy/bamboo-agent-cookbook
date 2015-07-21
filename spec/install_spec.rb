@@ -94,7 +94,7 @@ describe 'bamboo-agent::install' do
         variables: { user: 'bamboo', script: '/usr/local/bamboo/agent1-home/bin/bamboo-agent.sh', agent_id: '1' }
       )
 
-      expect(subject).to restart_service('bamboo-agent1')
+      expect(subject).to start_service('bamboo-agent1')
       expect(subject).to enable_service('bamboo-agent1')
 
       expect(subject).to create_template('/usr/local/bamboo/agent1-home/bin/bamboo-capabilities.properties').with(
