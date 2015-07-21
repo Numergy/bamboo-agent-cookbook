@@ -25,7 +25,9 @@ action :run do
   script_path    = "#{home_directory}/bin/bamboo-agent.sh"
   service_name   = "bamboo-agent#{new_resource.id}"
 
-  tmp_dir_props, expanded, augeas_props = {}, {}, []
+  tmp_dir_props = {}
+  expanded = {}
+  augeas_props = []
 
   # merge global and agent custom capabilities
   capabilities   = new_resource.capabilities.merge(bamboo_config[:capabilities])
