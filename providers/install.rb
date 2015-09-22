@@ -61,6 +61,7 @@ action :run do
 
   service service_name do
     action [:enable, :start]
+    supports restart: true, status: true
   end
 
   expand = lambda do |value|
