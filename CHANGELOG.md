@@ -3,6 +3,12 @@ Bamboo-agent CHANGELOG
 
 This file is used to list changes made in each version of the bamboo-agent cookbook.
 
+0.7.0
+-----
+- Use boxes store on http://opscode-vm-bento.s3.amazonaws.com/ for kitchen.yml
+- Service bamboo agent must supports restart and status to prevent errors when start action is used
+- Update init script to include LSBInitScripts (https://wiki.debian.org/LSBInitScripts)
+
 0.6.0
 -----
 - Update dependencies
