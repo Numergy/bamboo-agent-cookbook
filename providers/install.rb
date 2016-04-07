@@ -17,6 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+use_inline_resources
+
 action :run do
   bamboo_config  = node['bamboo-agent']
   user           = bamboo_config['user']
@@ -30,7 +33,7 @@ action :run do
   augeas_props = []
 
   # merge global and agent custom capabilities
-  capabilities   = new_resource.capabilities.merge(bamboo_config[:capabilities])
+  capabilities = new_resource.capabilities.merge(bamboo_config[:capabilities])
 
   directory home_directory do
     owner user['name']
