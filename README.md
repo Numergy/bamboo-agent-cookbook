@@ -41,9 +41,16 @@ Attributes
   <tr>
     <td><tt>['bamboo-agent']['install_dir']</tt></td>
     <td>String</td>
-    <td>whether to install bamboo agents</td>
+    <td>Where to install bamboo agents</td>
     <td><tt>/usr/local/bamboo</tt></td>
   </tr>
+  <tr>
+    <td><tt>['bamboo-agent']['install_dir']['recursive']</tt></td>
+    <td>Boolean</td>
+    <td>Recursively create install_dir</td>
+    <td><tt>false</tt></td>
+  </tr>
+
   <tr>
     <td><tt>['bamboo-agent']['installer_jar']</tt></td>
     <td>String</td>
