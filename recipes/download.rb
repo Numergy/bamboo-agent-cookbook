@@ -31,7 +31,7 @@ ohai 'reload_passwd' do
 end
 
 user user['name'] do
-  supports manage_home: user['manage']
+  manage_home user['manage']
   home "/home/#{user['name']}"
   gid user['group']
   shell user['shell']
@@ -41,6 +41,7 @@ end
 
 directory 'install-dir' do
   path bamboo_config['install_dir']
+  recursive bamboo_config['install_dir']['recursive']
   owner user['name']
   group user['group']
   mode '0755'
