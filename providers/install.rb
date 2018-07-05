@@ -107,7 +107,7 @@ action :run do
   end
 
   tmp_dir_props['wrapper.app.parameter.2'] = "#{server_url}/agentServer/"
-  tmp_dir_props.merge(new_resource.wrapper_conf_properties)
+  tmp_dir_props.merge!(new_resource.wrapper_conf_properties)
   wrapper_path = "#{home_directory}/conf/wrapper.conf"
   tmp_dir_props.each do |key, value|
     augeas_props << "set /files#{wrapper_path}/#{key} #{value}"
